@@ -3,6 +3,10 @@ import java.io.*;
 /**
  * Created by azada on 5/8/14.
  */
+//-------------------------------------------------------------
+//  class name : IputReaderData
+//  Purpose    : generate proper file structure for apriorProcess
+//-------------------------------------------------------------
 public class InputReaderData {
     String path ;
     String [] items ;

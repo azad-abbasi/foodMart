@@ -13,6 +13,7 @@ import java.util.Vector;
 //-------------------------------------------------------------
 class aprioriProcess
 {
+    String finalOutput="";
     String configfile="config.txt"; // default configuration file
     String transafile="transaction.txt"; // default transaction file
     private final int HT=1; // state of tree node (hash table or
@@ -21,7 +22,7 @@ class aprioriProcess
     int M; // total number of transactions
     Vector<Vector<String>> largeitemset=new Vector<Vector<String>>();
     Vector<candidateelement> candidate=new Vector<candidateelement>();
-    int minsup; // minimum support to make frequent
+    double minsup; // minimum support to make frequent
     String fullitemset;
 
 
@@ -146,41 +147,41 @@ class aprioriProcess
         String response = "";
 
         // ask if the user wants a non default config or transaction files
-        System.out.println("Press 'C' to change the default configuration and transaction files");
-        System.out.print("or any other key to continue.  ");
-        try
-        {
-            response = reader.readLine();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
-        // if they want to change config or transaction files, get their input
-        if(response.compareTo("C") * response.compareTo("c") == 0)
-        {
-            System.out.print("\nEnter new transaction filename: ");
-            try
-            {
-                transafile = reader.readLine();
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-
-            System.out.print("Enter new configuration filename: ");
-            try
-            {
-                configfile = reader.readLine();
-            }
-            catch (Exception e)
-            {
-                System.out.println(e);
-            }
-            System.out.println("Filenames changed");
-        }
+//        System.out.println("Press 'C' to change the default configuration and transaction files");
+//        System.out.print("or any other key to continue.  ");
+//        try
+//        {
+//            response = reader.readLine();
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
+//
+//        // if they want to change config or transaction files, get their input
+//        if(response.compareTo("C") * response.compareTo("c") == 0)
+//        {
+//            System.out.print("\nEnter new transaction filename: ");
+//            try
+//            {
+//                transafile = reader.readLine();
+//            }
+//            catch (Exception e)
+//            {
+//                System.out.println(e);
+//            }
+//
+//            System.out.print("Enter new configuration filename: ");
+//            try
+//            {
+//                configfile = reader.readLine();
+//            }
+//            catch (Exception e)
+//            {
+//                System.out.println(e);
+//            }
+//            System.out.println("Filenames changed");
+//        }
 
         //open the config file and load the values
         try
@@ -198,11 +199,13 @@ class aprioriProcess
 
             //minsup
             oneline=data_in.readLine();
-            minsup=Integer.valueOf(oneline).intValue();
+            minsup=Double.valueOf(oneline);
 
             //output config info to the user
             System.out.print("\nInput configuration: "+N+" items, "+M+" transactions, ");
+            finalOutput+="\nInput configuration: "+N+" items, "+M+" transactions, ";
             System.out.println("minsup = "+minsup+"%");
+            finalOutput+=      "minsup ="+minsup+"%\n\n";
             System.out.println();
         }
         catch (IOException e)
@@ -689,15 +692,18 @@ class aprioriProcess
 
             ((candidateelement)candidate.elementAt(k-1)).htroot=createcandidatehashtree(k);
 
-//      System.out.println("Now reading transactions, increment counters of itemset");
+//      System.out.println("Now Input configurationreading transactions, increment counters of itemset");
             transatraverse(k);
 
             createlargeitemset(k);
+            finalOutput+="Frequent "+k+"-itemsets:\n";
             System.out.println("Frequent "+k+"-itemsets:");
             System.out.println((Vector)(largeitemset.elementAt(k-1)));
+            finalOutput+= String.valueOf((Vector)(largeitemset.elementAt(k-1)));
+            finalOutput += "\n";
 
-            InputReader.printToFile("output.txt",String.valueOf((Vector)(largeitemset.elementAt(k-1))));
         }
+        InputReader.printToFile("output.txt", finalOutput);
 
         hashtreenode htn=new hashtreenode();
         htn=((candidateelement)candidate.elementAt(k-2)).htroot;
@@ -708,5 +714,9 @@ class aprioriProcess
         System.out.println();
         System.out.println("Execution time is: "+((s2-s1)/(double)1000) + " seconds.");
 
+
+    }
+    public Vector<Vector<String>> getResultVector(){
+        return largeitemset;
     }
 }

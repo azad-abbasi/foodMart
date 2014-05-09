@@ -3,6 +3,10 @@
  */
 
 import java.io.*;
+//-------------------------------------------------------------
+//  class name : IputReader
+//  Purpose    : imported from another project just for the usage of PrintToFile method
+//-------------------------------------------------------------
 
 public class InputReader {
     private String output;

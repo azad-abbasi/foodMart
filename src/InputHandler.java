@@ -3,6 +3,10 @@
 /**
  * Created by azada on 5/8/14.
  */
+//-------------------------------------------------------------
+//  class name : InputHandler
+//  Purpose    : generate proper file structure for apriorProcess
+//-------------------------------------------------------------
 public class InputHandler {
     public static void handler(String[] args) {
         InputReaderData reader = new InputReaderData(args[0]);
