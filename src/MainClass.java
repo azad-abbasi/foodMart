@@ -15,9 +15,9 @@ public class MainClass {
         String[] data = input.getItems();
         aprioriProcess process1 = new aprioriProcess();
         Vector<Vector<String>> output = process1.getResultVector();
-        System.out.println(splitString(output.get(1).get(2))[1]);
-        Vector<Vector<String>> outputItems = new Vector<Vector<String>>();
 
+        Vector<Vector<String>> outputItems = new Vector<Vector<String>>();
+        String finalOutput="";
 
         for (int i = 0 ; i<output.size(); i++){
             outputItems.add(new Vector<String>());
@@ -28,16 +28,16 @@ public class MainClass {
                         temp += "-";
                     }
                     temp += data[Integer.valueOf(splitString(output.get(i).get(j))[k])-1];
-
                 }
-
                 outputItems.get(i).add(temp);
             }
         }
         for (int i=0 ; i<outputItems.size() ; i++){
+            finalOutput+="Frequent "+(i+1)+"-itemsets:\n";
+            finalOutput+=String.valueOf(outputItems.get(i))+"\n";
             System.out.println(outputItems.get(i));
         }
-
+        InputReader.printToFile("out.txt",finalOutput);
 
 
 
